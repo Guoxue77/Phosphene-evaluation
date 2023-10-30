@@ -2,70 +2,86 @@
 <html>
 <head>
     <title>Phosphene Evaluation Program</title>
+    <!-- Include SheetJS library for Excel export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
 </head>
 <body>
     <h1>Welcome to the Phosphene Evaluation Program</h1>
-    
-    <label for="userID">User ID:</label>
-    <input type="text" id="userID"><br>
-    
-    <label for="session">Session details:</label>
-    <input type="text" id="session"><br>
-    
-    <label for="numStimulations">Number of stimulations:</label>
-    <input type="number" id="numStimulations"><br>
-    
-    <div id="stimulationDiv"></div>
-    
+    <p>Please rate the intensity of the perceived phosphenes on a scale of 0 to 4.</p>
+    <div id="stimulationDiv">
+        <!-- Stimuli presentation area -->
+    </div>
+    <div>
+        <label for="intensity">Intensity:</label>
+        <select id="intensity">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+        <button id="submit">Submit</button>
+    </div>
+    <div id="results">
+        <!-- Results display area -->
+    </div>
+    <button id="export">Export to Excel</button>
     <script>
-        const userID = document.getElementById("userID");
-        const session = document.getElementById("session");
-        const numStimulationsInput = document.getElementById("numStimulations");
-        const stimulationDiv = document.getElementById("stimulationDiv");
+        const numStimulations = 10; // Number of stimulations
+        let currentStimulation = 0; // Current stimulation count
+        const responses = []; // Array to store responses
 
-        let numStimulations = 0;
-        let currentStimulation = 0;
-        const results = [];
+        const stimulationDiv = document.getElementById('stimulationDiv');
+        const intensityInput = document.getElementById('intensity');
+        const submitButton = document.getElementById('submit');
+        const resultsDiv = document.getElementById('results');
+        const exportButton = document.getElementById('export');
 
-        function startStimulations() {
-            numStimulations = parseInt(numStimulationsInput.value);
-            stimulationDiv.innerHTML = "";
-            currentStimulation = 0;
-            nextStimulation();
-        }
-
-        function recordIntensity(intensity) {
-            results.push(intensity);
-            nextStimulation();
-        }
-
-        function nextStimulation() {
-            currentStimulation++;
-            if (currentStimulation <= numStimulations) {
-                stimulationDiv.innerHTML = `
-                    <h3>Stimulation ${currentStimulation}:</h3>
-                    <button onclick="recordIntensity(0)">0</button>
-                    <button onclick="recordIntensity(1)">1</button>
-                    <button onclick="recordIntensity(2)">2</button>
-                    <button onclick="recordIntensity(3)">3</button>
-                    <button onclick="recordIntensity(4)">4</button>
-                    <button onclick="recordIntensity(5)">5</button>
-                    <button onclick="recordIntensity(6)">6</button>
-                `;
+        function presentStimulation() {
+            if (currentStimulation < numStimulations) {
+                stimulationDiv.innerHTML = `Stimulation ${currentStimulation + 1}`;
             } else {
                 displayResults();
             }
         }
 
         function displayResults() {
-            stimulationDiv.innerHTML = `
-                <h3>Results:</h3>
-                <p>User ID: ${userID.value}</p>
-                <p>Session: ${session.value}</p>
-                <p>Stimulation count: ${numStimulations}</p>
-                <p>Intensity results: ${results.join(', ')}</p>
-            `;
+            resultsDiv.innerHTML = `Results: ${responses.join(', ')}`;
         }
+
+        submitButton.addEventListener('click', () => {
+            const intensity = intensityInput.value;
+            if (!isNaN(intensity) && intensity >= 0 && intensity <= 4) {
+                responses.push(intensity);
+                currentStimulation++;
+                presentStimulation();
+            }
+        });
+
+        exportButton.addEventListener('click', () => {
+            // Create a data array for Excel export
+            const data = [['Participant ID', 'Session', ...responses]];
+
+            // Prompt for Participant ID and Session details
+            const participantID = prompt('Enter Participant ID:');
+            const session = prompt('Enter Session details:');
+
+            if (participantID && session) {
+                data.push([participantID, session, ...responses]);
+
+                // Create a new workbook and add the data
+                const wb = XLSX.utils.book_new();
+                const ws = XLSX.utils.aoa_to_sheet(data);
+                XLSX.utils.book_append_sheet(wb, ws, 'Phosphene_Evaluation');
+
+                // Export the data to an Excel file
+                XLSX.writeFile(wb, 'Phosphene_Evaluation.xlsx');
+            }
+        });
+
+        // Start the evaluation
+        presentStimulation();
     </script>
 </body>
 </html>
+
