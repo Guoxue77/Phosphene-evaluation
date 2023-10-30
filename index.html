@@ -4,6 +4,13 @@
     <title>Phosphene Evaluation Program</title>
     <!-- Include SheetJS library for Excel export -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
+    <style>
+        /* Style adjustments for better intensity selection visibility */
+        select {
+            font-size: 20px;
+            width: 100px;
+        }
+    </style>
 </head>
 <body>
     <h1>Welcome to the Phosphene Evaluation Program</h1>
@@ -25,7 +32,6 @@
     <div id="results">
         <!-- Results display area -->
     </div>
-    <button id="export">Export to Excel</button>
     <script>
         const numStimulations = 10; // Number of stimulations
         let currentStimulation = 0; // Current stimulation count
@@ -35,11 +41,16 @@
         const intensityInput = document.getElementById('intensity');
         const submitButton = document.getElementById('submit');
         const resultsDiv = document.getElementById('results');
-        const exportButton = document.getElementById('export');
+
+        // Prompt for Participant ID and Session details
+        const participantID = prompt('Enter Participant ID:');
+        const session = prompt('Enter Session details:');
 
         function presentStimulation() {
             if (currentStimulation < numStimulations) {
                 stimulationDiv.innerHTML = `Stimulation Trial: ${currentStimulation + 1}`;
+                intensityInput.value = ''; // Reset intensity selection
+                intensityInput.disabled = false; // Enable selection
             } else {
                 displayResults();
             }
@@ -57,37 +68,39 @@
             if (!isNaN(intensity) && intensity >= 0 && intensity <= 4) {
                 responses.push(intensity);
                 currentStimulation++;
-                presentStimulation();
-            }
-        });
-
-        exportButton.addEventListener('click', () => {
-            // Create a data array for Excel export
-            const data = [['Participant ID', 'Session', 'Stimulation Trial', ...responses]];
-
-            // Prompt for Participant ID and Session details
-            const participantID = prompt('Enter Participant ID:');
-            const session = prompt('Enter Session details:');
-
-            if (participantID && session) {
-                for (let i = 0; i < responses.length; i++) {
-                    data.push([participantID, session, i + 1, responses[i]]);
+                if (currentStimulation < numStimulations) {
+                    presentStimulation();
+                } else {
+                    exportToExcel();
                 }
-
-                // Create a new workbook and add the data
-                const wb = XLSX.utils.book_new();
-                const ws = XLSX.utils.aoa_to_sheet(data);
-                XLSX.utils.book_append_sheet(wb, ws, 'Phosphene_Evaluation');
-
-                // Export the data to an Excel file
-                XLSX.writeFile(wb, 'Phosphene_Evaluation.xlsx');
             }
         });
+
+        function exportToExcel() {
+            // Create a data array for Excel export
+            const data = [['Participant ID', 'Session', 'Stimulation Trial', 'Stimulation Intensity']];
+
+            for (let i = 0; i < responses.length; i++) {
+                data.push([participantID, session, i + 1, responses[i]]);
+            }
+
+            // Generate the Excel file name based on Participant ID and Session
+            const fileName = `Phosphene_Evaluation_${participantID}_${session}.xlsx`;
+
+            // Create a new workbook and add the data
+            const wb = XLSX.utils.book_new();
+            const ws = XLSX.utils.aoa_to_sheet(data);
+            XLSX.utils.book_append_sheet(wb, ws, 'Phosphene_Evaluation');
+
+            // Export the data to an Excel file with the generated name
+            XLSX.writeFile(wb, fileName);
+        }
 
         // Start the evaluation
         presentStimulation();
     </script>
 </body>
 </html>
+
 
 
