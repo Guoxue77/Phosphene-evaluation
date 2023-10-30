@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Phosphene Evaluation Program</title>
+</head>
+<body>
+    <h1>Welcome to the Phosphene Evaluation Program</h1>
+    
+    <label for="userID">User ID:</label>
+    <input type="text" id="userID"><br>
+    
+    <label for="session">Session details:</label>
+    <input type="text" id="session"><br>
+    
+    <label for="numStimulations">Number of stimulations:</label>
+    <input type="number" id="numStimulations"><br>
+    
+    <div id="stimulationDiv"></div>
+    
+    <script>
+        const userID = document.getElementById("userID");
+        const session = document.getElementById("session");
+        const numStimulationsInput = document.getElementById("numStimulations");
+        const stimulationDiv = document.getElementById("stimulationDiv");
+
+        let numStimulations = 0;
+        let currentStimulation = 0;
+        const results = [];
+
+        function startStimulations() {
+            numStimulations = parseInt(numStimulationsInput.value);
+            stimulationDiv.innerHTML = "";
+            currentStimulation = 0;
+            nextStimulation();
+        }
+
+        function recordIntensity(intensity) {
+            results.push(intensity);
+            nextStimulation();
+        }
+
+        function nextStimulation() {
+            currentStimulation++;
+            if (currentStimulation <= numStimulations) {
+                stimulationDiv.innerHTML = `
+                    <h3>Stimulation ${currentStimulation}:</h3>
+                    <button onclick="recordIntensity(0)">0</button>
+                    <button onclick="recordIntensity(1)">1</button>
+                    <button onclick="recordIntensity(2)">2</button>
+                    <button onclick="recordIntensity(3)">3</button>
+                    <button onclick="recordIntensity(4)">4</button>
+                    <button onclick="recordIntensity(5)">5</button>
+                    <button onclick="recordIntensity(6)">6</button>
+                `;
+            } else {
+                displayResults();
+            }
+        }
+
+        function displayResults() {
+            stimulationDiv.innerHTML = `
+                <h3>Results:</h3>
+                <p>User ID: ${userID.value}</p>
+                <p>Session: ${session.value}</p>
+                <p>Stimulation count: ${numStimulations}</p>
+                <p>Intensity results: ${results.join(', ')}</p>
+            `;
+        }
+    </script>
+</body>
+</html>
