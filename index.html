@@ -24,7 +24,7 @@
 
         .intensity-button {
             font-size: 30px;
-            margin: 30px;
+            margin: 24px;
         }
 
         #export {
@@ -40,13 +40,8 @@
 </head>
 <body>
     <h1>Phosphene Evaluation Program</h1>
-    <p><span style="font-size: 20px; font-weight: bold; color: blue;">Please rate the intensity of the perceived phosphenes on a scale of 0 to 4; 0 means no perception, 4 means strong perception.</span></p>
-    <div class="intensity-options">
-        <label>0</label>
-        <label>1</label>
-        <label>2</label>
-        <label>3</label>
-        <label>4</label>
+    <p><span style="font-size: 24px; font-weight: bold; color: blue;">Please rate the intensity of the perceived phosphenes on a scale of 0 to 4; 0 means no perception, 4 means strong perception.</span></p>
+
     </div>
     <div id="stimulationDiv">
         <!-- Stimuli presentation area -->
@@ -92,7 +87,8 @@
             for (let i = 0; i < responses.length; i++) {
                 resultsDiv.innerHTML += `Stimulation Trial ${i + 1}: Intensity ${responses[i] === null ? 'Not selected' : responses[i]}<br>`;
             }
-            resultsDiv.style.display = 'block';
+            resultsDiv.style.display = 'none'; // Hide the results
+            exportButton.style.display = 'block'; // Show the export button
         }
 
         function chooseIntensity(intensity) {
@@ -131,6 +127,7 @@
     </script>
 </body>
 </html>
+
 
 
 
