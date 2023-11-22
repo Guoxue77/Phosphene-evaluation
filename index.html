@@ -23,8 +23,18 @@
         }
 
         .intensity-button {
+            font-size: 30px;
+            margin: 15px;
+        }
+
+        #export {
+            margin-top: 20px;
             font-size: 20px;
-            margin: 10px;
+        }
+
+        #results {
+            display: none;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -53,7 +63,7 @@
     <div id="results">
         <!-- Results display area -->
     </div>
-    <button id="export">Export to Excel</button>
+    <button id="export" onclick="exportToExcel()">Export to Excel</button>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
     <script>
         const numStimulations = 10; // Number of stimulations
@@ -82,6 +92,7 @@
             for (let i = 0; i < responses.length; i++) {
                 resultsDiv.innerHTML += `Stimulation Trial ${i + 1}: Intensity ${responses[i] === null ? 'Not selected' : responses[i]}<br>`;
             }
+            resultsDiv.style.display = 'block';
         }
 
         function chooseIntensity(intensity) {
@@ -95,7 +106,7 @@
             }
         }
 
-        exportButton.addEventListener('click', () => {
+        function exportToExcel() {
             // Create a data array for Excel export
             const data = [['Participant ID', 'Session', 'Stimulation Trial', 'Stimulation Intensity']];
 
@@ -113,13 +124,14 @@
 
             // Export the data to an Excel file with the generated name
             XLSX.writeFile(wb, fileName);
-        });
+        }
 
         // Start the evaluation
         presentStimulation();
     </script>
 </body>
 </html>
+
 
 
 
