@@ -67,7 +67,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
     <script>
         const numStimulations = 10; // Number of stimulations
-        let currentStimulation = 0; // Current stimulation count
+        let currentStimulation = 1; // Start from Trial 1
         const responses = Array(numStimulations).fill(null); // Array to store responses
         let selectedIntensity = null;
 
@@ -80,8 +80,8 @@
         const session = prompt('Enter Session details:');
 
         function presentStimulation() {
-            if (currentStimulation < numStimulations) {
-                stimulationDiv.innerHTML = `Stimulation Trial: ${currentStimulation + 1}`;
+            if (currentStimulation <= numStimulations) {
+                stimulationDiv.innerHTML = `Stimulation Trial: ${currentStimulation}`;
             } else {
                 displayResults();
             }
@@ -98,10 +98,10 @@
 
         function chooseIntensity(intensity) {
             selectedIntensity = intensity;
-            responses[currentStimulation] = selectedIntensity;
+            responses[currentStimulation - 1] = selectedIntensity; // Adjusted index
             currentStimulation++;
             presentStimulation(); // Move this here to update the trial number immediately
-            if (currentStimulation >= numStimulations) {
+            if (currentStimulation > numStimulations) {
                 displayResults();
             }
         }
@@ -131,6 +131,7 @@
     </script>
 </body>
 </html>
+
 
 
 
