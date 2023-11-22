@@ -54,6 +54,7 @@
         <!-- Results display area -->
     </div>
     <button id="export">Export to Excel</button>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
     <script>
         const numStimulations = 10; // Number of stimulations
         let currentStimulation = 0; // Current stimulation count
@@ -62,7 +63,7 @@
 
         const stimulationDiv = document.getElementById('stimulationDiv');
         const resultsDiv = document.getElementById('results');
-        const exportButton = document.getElementById('export'); // Corrected exportButton variable
+        const exportButton = document.getElementById('export');
 
         // Prompt for Participant ID and Session details
         const participantID = prompt('Enter Participant ID:');
@@ -119,5 +120,6 @@
     </script>
 </body>
 </html>
+
 
 
