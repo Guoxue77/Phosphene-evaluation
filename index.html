@@ -23,12 +23,12 @@
         }
 
         .intensity-button {
-            font-size: 36px;
+            font-size: 40px;
             margin: 15px;
         }
 
         #export {
-            margin-top: 40px;
+            margin-top: 60px;
             font-size: 20px;
         }
 
@@ -42,7 +42,6 @@
     <h1>Phosphene Evaluation Program</h1>
     <p><span style="font-size: 24px; font-weight: bold; color: blue;">Please rate the intensity of the perceived phosphenes on a scale of 0 to 4; 0 means no perception, 4 means strong perception.</span></p>
 
-    </div>
     <div id="stimulationDiv">
         <!-- Stimuli presentation area -->
     </div>
@@ -95,9 +94,8 @@
             selectedIntensity = intensity;
             responses[currentStimulation] = selectedIntensity;
             currentStimulation++;
-            if (currentStimulation < numStimulations) {
-                presentStimulation();
-            } else {
+            presentStimulation(); // Move this here to update the trial number immediately
+            if (currentStimulation >= numStimulations) {
                 displayResults();
             }
         }
@@ -127,6 +125,7 @@
     </script>
 </body>
 </html>
+
 
 
 
