@@ -14,12 +14,6 @@
             flex-direction: column;
         }
 
-        label {
-            font-weight: bold;
-            font-size: 24px;
-            color: blue;
-        }
-
         .intensity-options {
             display: flex;
             justify-content: space-between;
@@ -45,23 +39,14 @@
     <h1>Phosphene Evaluation Program</h1>
     <p><span style="font-size: 24px; font-weight: bold; color: blue;">Please rate the intensity of the perceived phosphenes on a scale of 0 to 4; 0 means no perception, 4 means strong perception.</span></p>
     <div class="intensity-options">
-        <label>0</label>
-        <label>1</label>
-        <label>2</label>
-        <label>3</label>
-        <label>4</label>
+        <button class="intensity-button" onclick="chooseIntensity(0)">0</button>
+        <button class="intensity-button" onclick="chooseIntensity(1)">1</button>
+        <button class="intensity-button" onclick="chooseIntensity(2)">2</button>
+        <button class="intensity-button" onclick="chooseIntensity(3)">3</button>
+        <button class="intensity-button" onclick="chooseIntensity(4)">4</button>
     </div>
     <div id="stimulationDiv">
         <!-- Stimuli presentation area -->
-    </div>
-    <div>
-        <div class="intensity-options">
-            <button class="intensity-button" onclick="chooseIntensity(0)">0</button>
-            <button class="intensity-button" onclick="chooseIntensity(1)">1</button>
-            <button class="intensity-button" onclick="chooseIntensity(2)">2</button>
-            <button class="intensity-button" onclick="chooseIntensity(3)">3</button>
-            <button class="intensity-button" onclick="chooseIntensity(4)">4</button>
-        </div>
     </div>
     <div id="results">
         <!-- Results display area -->
@@ -69,7 +54,7 @@
     <button id="export" onclick="exportToExcel()">Export to Excel</button>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
     <script>
-        const numStimulations = 10; // Number of stimulations
+        const numStimulations = 120; // Number of stimulations
         let currentStimulation = 1; // Start from Trial 1
         const responses = Array(numStimulations).fill(null); // Array to store responses
         let selectedIntensity = null;
@@ -130,7 +115,10 @@
         }
 
         // Start the evaluation
-        present
+        presentStimulation();
+    </script>
+</body>
+</html>
 
 
 
