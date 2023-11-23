@@ -95,7 +95,7 @@
             for (let i = 0; i < responses.length; i++) {
                 resultsDiv.innerHTML += `Stimulation Trial ${i + 1}: Intensity ${responses[i] === null ? 'Not selected' : responses[i]}<br>`;
             }
-            resultsDiv.style.display = 'none'; // Hide the results
+            resultsDiv.style.display = 'block'; // Show the results
             exportButton.style.display = 'block'; // Show the export button
         }
 
@@ -130,10 +130,8 @@
         }
 
         // Start the evaluation
-        presentStimulation();
-    </script>
-</body>
-</html>
+        present
+
 
 
 
