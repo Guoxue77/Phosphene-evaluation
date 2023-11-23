@@ -1,6 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Phosphene Evaluation Program</title>
     <style>
         body {
@@ -23,12 +26,12 @@
         }
 
         .intensity-button {
-            font-size: 80px;
-            margin: 30px;
+            font-size: 24px;
+            margin: 15px;
         }
 
         #export {
-            margin-top: 100px;
+            margin-top: 20px;
             font-size: 20px;
         }
 
@@ -41,7 +44,13 @@
 <body>
     <h1>Phosphene Evaluation Program</h1>
     <p><span style="font-size: 24px; font-weight: bold; color: blue;">Please rate the intensity of the perceived phosphenes on a scale of 0 to 4; 0 means no perception, 4 means strong perception.</span></p>
-
+    <div class="intensity-options">
+        <label>0</label>
+        <label>1</label>
+        <label>2</label>
+        <label>3</label>
+        <label>4</label>
+    </div>
     <div id="stimulationDiv">
         <!-- Stimuli presentation area -->
     </div>
@@ -125,6 +134,7 @@
     </script>
 </body>
 </html>
+
 
 
 
