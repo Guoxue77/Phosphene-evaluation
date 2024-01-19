@@ -13,8 +13,9 @@
             height: 100vh;
             flex-direction: column;
         }
+
         h1 {
-            margin-top: 60px; /* Adjust the margin-top as needed */
+            margin-top: 20px;
         }
 
         .intensity-options {
@@ -23,15 +24,17 @@
         }
 
         .intensity-button {
-            font-size: 100px;
-            margin: 40px;
+            font-size: 150px;
+            margin: 60px;
         }
+
         #stimulationDiv {
-            font-size: 30px; /* Adjust the font-size as needed */
+            font-size: 28px;
         }
+
         #export {
-            margin-top: 200px;
-            font-size: 40px;
+            margin-top: 20px;
+            font-size: 20px;
         }
 
         #results {
@@ -42,13 +45,10 @@
 </head>
 <body>
     <h1>Phosphene Evaluation Program</h1>
-    <p><span style="font-size: 24px; font-weight: bold; color: blue;">Please rate the intensity of the perceived phosphenes on a scale of 0 to 4; 0 means no perception, 4 means strong perception.</span></p>
+    <p><span style="font-size: 24px; font-weight: bold; color: blue;">Please rate the intensity of the perceived phosphenes.</span></p>
     <div class="intensity-options">
-        <button class="intensity-button" onclick="chooseIntensity(0)">0</button>
-        <button class="intensity-button" onclick="chooseIntensity(1)">1</button>
-        <button class="intensity-button" onclick="chooseIntensity(2)">2</button>
-        <button class="intensity-button" onclick="chooseIntensity(3)">3</button>
-        <button class="intensity-button" onclick="chooseIntensity(4)">4</button>
+        <button class="intensity-button" onclick="chooseIntensity(1)">Yes</button>
+        <button class="intensity-button" onclick="chooseIntensity(0)">No</button>
     </div>
     <div id="stimulationDiv">
         <!-- Stimuli presentation area -->
@@ -83,7 +83,7 @@
         function displayResults() {
             resultsDiv.innerHTML = 'Results:<br>';
             for (let i = 0; i < responses.length; i++) {
-                resultsDiv.innerHTML += `Stimulation Trial ${i + 1}: Intensity ${responses[i] === null ? 'Not selected' : responses[i]}<br>`;
+                resultsDiv.innerHTML += `Stimulation Trial ${i + 1}: Intensity ${responses[i] === null ? 'Not selected' : responses[i] ? 'Yes' : 'No'}<br>`;
             }
             resultsDiv.style.display = 'block'; // Show the results
             exportButton.style.display = 'block'; // Show the export button
@@ -101,10 +101,10 @@
 
         function exportToExcel() {
             // Create a data array for Excel export
-            const data = [['Participant ID', 'Session', 'Stimulation Trial', 'Stimulation Intensity']];
+            const data = [['Participant ID', 'Session', 'Stimulation Trial', 'Perceived Phosphenes']];
 
             for (let i = 0; i < responses.length; i++) {
-                data.push([participantID, session, i + 1, responses[i] === null ? 'Not selected' : responses[i]]);
+                data.push([participantID, session, i + 1, responses[i] === null ? 'Not selected' : responses[i] ? 'Yes' : 'No']);
             }
 
             // Generate the Excel file name based on Participant ID and Session
